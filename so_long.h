@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/05 22:03:39 by llopes-n          #+#    #+#             */
-/*   Updated: 2022/01/07 01:53:15 by coder            ###   ########.fr       */
+/*   Created: 2022/01/06 20:01:08 by coder             #+#    #+#             */
+/*   Updated: 2022/01/07 00:55:18 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#ifndef SO_LONG_H
+# define SO_LONG_H
+# define XK_MISCELLANY
 
-int	key_hook(int key, char *str)
+# include <X11/keysymdef.h>
+# include <X11/X.h>
+# include <mlx.h>
+# include <stdlib.h>
+# include <stdio.h>
+
+typedef struct s_game
 {
-	printf("%s\n", str);
-	printf("%i\n", key);
-	if (key == XK_Escape)
-		exit (1);
-	return (0);
-}
+	void	*mlx;
+	void	*window;
+	int		width;
+	int		height;
+}	t_game;
 
-int	main(void)
+typedef struct s_cord
 {
-	t_game	game;
+	int	x;
+	int	y;
+}	t_cord;
 
-	game.width = 800;
-	game.height = 480;
-	game.mlx = mlx_init();
-	game.window = mlx_new_window(game.mlx, game.width, game.height,
-			"teste");
-	mlx_key_hook(game.window, key_hook, (void *)0);
-	mlx_loop(game.mlx);
-}
+int	main(void);
+
+#endif
