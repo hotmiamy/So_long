@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 20:01:08 by coder             #+#    #+#             */
-/*   Updated: 2022/01/07 03:53:29 by coder            ###   ########.fr       */
+/*   Updated: 2022/01/19 02:29:57 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <mlx.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include "./libft/libft.h"
 
 typedef struct s_game
 {
@@ -27,6 +29,15 @@ typedef struct s_game
 	int		width;
 	int		height;
 }	t_game;
+
+typedef struct s_tile
+{
+	void			*floor;
+	void			*wall;
+	int				x;
+	int				y;
+	struct s_tile	*next;
+}	t_tile;
 
 typedef struct s_cord
 {

@@ -6,6 +6,8 @@ INCLUDES = -lmlx -lX11 -lXext
 SRC = main.c
 OBJ = *.o
 
+LIBFT = ./libft/libft.a
+
 NONE='\033[0m'
 GREEN='\033[32m'
 YELLOW='\033[33m'
@@ -14,14 +16,18 @@ CURSIVE='\033[3m'
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(LIBFT) 
 	@ echo $(CURSIVE) $(GRAY) " - Compiling $(NAME)..." $(NONE)
-	@ clang $(FLAGS) $(OBJ) $(INCLUDES) -o $(NAME)
+	@ clang $(addprefix ./src/,$(SRC)) $(FLAGS) $(INCLUDES) -L ./libft -lft -o $(NAME)
 	@ echo $(GREEN)" - Compiled - " $(NONE)
+
+$(LIBFT): 
+	make all -C ./libft
+	make clean -C ./libft
 
 $(OBJ): $(SRC)
 	@ echo $(CURSIVE) $(GRAY) " - Making object files..." $(NONE)
-	@ clang $(FLAGS) -c $(SRC)
+	@ clang $(FLAGS) -c $(addprefix ./src/,$(SRC))
 
 clean:
 	@ echo $(CURSIVE) $(GRAY) " - Removing Object files..." $(NONE)
