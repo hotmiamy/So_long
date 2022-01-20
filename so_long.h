@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 20:01:08 by coder             #+#    #+#             */
-/*   Updated: 2022/01/19 02:29:57 by coder            ###   ########.fr       */
+/*   Updated: 2022/01/20 01:00:28 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_game
 	void	*window;
 	int		width;
 	int		height;
+	int		map;
 }	t_game;
 
 typedef struct s_tile
@@ -43,8 +44,11 @@ typedef struct s_cord
 {
 	int	x;
 	int	y;
+	int	col;
+	int	row;
 }	t_cord;
 
-int	main(void);
+int		main(void);
+void	draw_map(int map, t_game *game);
 
 #endif

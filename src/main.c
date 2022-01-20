@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 22:03:39 by llopes-n          #+#    #+#             */
-/*   Updated: 2022/01/19 01:42:08 by coder            ###   ########.fr       */
+/*   Updated: 2022/01/20 00:29:24 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,20 @@ int	key_hook(int key, char *str)
 int	main(void)
 {
 	t_game	game;
-	void	*floor;
-	int		x;
-	int		y;
+	t_tile	*tile;
+	t_cord	cord;
 
 	game.width = 800;
 	game.height = 480;
 	game.mlx = mlx_init();
 	game.window = mlx_new_window(game.mlx, game.width, game.height,
 			"teste");
-	floor = mlx_xpm_file_to_image(game.mlx, "./images/floor_tile.xpm", &x, &y);
-	mlx_put_image_to_window(game.mlx, game.window, floor,
-		game.width / 2, game.height / 2);
+	game.map = open ("./maps/map.ber", O_RDONLY);
+	if (game.map < 0)
+		return (0);
+	draw_map(game.map, &game);
 	mlx_key_hook(game.window, key_hook, (void *)0);
 	mlx_loop(game.mlx);
+	close(game.map);
+	return (0);
 }

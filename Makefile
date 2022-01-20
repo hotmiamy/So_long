@@ -3,7 +3,7 @@ NAME = so_long.out
 FLAGS  = -Wall -Wextra -Werror
 INCLUDES = -lmlx -lX11 -lXext
 
-SRC = main.c
+SRC = main.c map.c
 OBJ = *.o
 
 LIBFT = ./libft/libft.a
@@ -18,7 +18,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) 
 	@ echo $(CURSIVE) $(GRAY) " - Compiling $(NAME)..." $(NONE)
-	@ clang $(addprefix ./src/,$(SRC)) $(FLAGS) $(INCLUDES) -L ./libft -lft -o $(NAME)
+	@ clang $(addprefix ./src/,$(SRC)) $(INCLUDES) -L ./libft -lft -o $(NAME)
 	@ echo $(GREEN)" - Compiled - " $(NONE)
 
 $(LIBFT): 
@@ -28,6 +28,9 @@ $(LIBFT):
 $(OBJ): $(SRC)
 	@ echo $(CURSIVE) $(GRAY) " - Making object files..." $(NONE)
 	@ clang $(FLAGS) -c $(addprefix ./src/,$(SRC))
+
+valgrind:
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME)
 
 clean:
 	@ echo $(CURSIVE) $(GRAY) " - Removing Object files..." $(NONE)
