@@ -18,7 +18,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) 
 	@ echo $(CURSIVE) $(GRAY) " - Compiling $(NAME)..." $(NONE)
-	@ clang $(addprefix ./src/,$(SRC)) $(INCLUDES) -L ./libft -lft -o $(NAME)
+	@ clang $(addprefix ./src/,$(SRC)) $(FLAGS) -g3 $(INCLUDES) -L ./libft -lft -o $(NAME)
 	@ echo $(GREEN)" - Compiled - " $(NONE)
 
 $(LIBFT): 
@@ -30,7 +30,7 @@ $(OBJ): $(SRC)
 	@ clang $(FLAGS) -c $(addprefix ./src/,$(SRC))
 
 valgrind:
-	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME)
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --log-file=log_valgrind ./$(NAME)
 
 clean:
 	@ echo $(CURSIVE) $(GRAY) " - Removing Object files..." $(NONE)

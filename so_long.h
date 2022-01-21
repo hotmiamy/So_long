@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 20:01:08 by coder             #+#    #+#             */
-/*   Updated: 2022/01/20 01:00:28 by coder            ###   ########.fr       */
+/*   Updated: 2022/01/21 01:18:03 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,14 @@ typedef struct s_cord
 	int	row;
 }	t_cord;
 
+typedef struct s_module
+{
+	t_game	*game;
+	t_cord	*cord;
+	t_tile	*tile;
+}	t_module;
+
 int		main(void);
-void	draw_map(int map, t_game *game);
+void	draw_map(int map, t_module *module);
 
 #endif
