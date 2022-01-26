@@ -3,7 +3,7 @@ NAME = so_long.out
 FLAGS  = -Wall -Wextra -Werror
 INCLUDES = -lmlx -lX11 -lXext
 
-SRC = main.c map.c
+SRC = main.c map.c load_game.c
 OBJ = *.o
 
 LIBFT = ./libft/libft.a
