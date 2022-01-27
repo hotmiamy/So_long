@@ -3,8 +3,9 @@ NAME = so_long.out
 FLAGS  = -Wall -Wextra -Werror
 INCLUDES = -lmlx -lX11 -lXext
 
-SRC = main.c map.c load_game.c
-OBJ = *.o
+SRC = $(addprefix ./src/, $(SRC_FILES))
+SRC_FILES = main.c map.c load_game.c validate.c
+OBJ = $(SRC:src/.c=src/.o)
 
 LIBFT = ./libft/libft.a
 
@@ -14,23 +15,25 @@ YELLOW='\033[33m'
 GRAY='\033[2;37m'
 CURSIVE='\033[3m'
 
+$(OBJ)/%.o: $(SRC)
+	@ echo $(CURSIVE) $(GRAY) " - Making object files..." $(NONE)
+	clang $(FLAGS) -c $< -o $(<:.c=.o)
+
 all: $(NAME)
 
-$(NAME): $(LIBFT) 
+$(NAME): $(OBJ) $(LIBFT) 
 	@ echo $(CURSIVE) $(GRAY) " - Compiling $(NAME)..." $(NONE)
-	@ clang $(addprefix ./src/,$(SRC)) $(FLAGS) -g3 $(INCLUDES) -L ./libft -lft -o $(NAME)
+	clang $(FLAGS) $(OBJ) $(LIBFT) -g3 $(INCLUDES) -o $(NAME)
 	@ echo $(GREEN)" - Compiled - " $(NONE)
 
 $(LIBFT): 
 	make all -C ./libft
-	make clean -C ./libft
-
-$(OBJ): $(SRC)
-	@ echo $(CURSIVE) $(GRAY) " - Making object files..." $(NONE)
-	@ clang $(FLAGS) -c $(addprefix ./src/,$(SRC))
 
 valgrind:
 	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --log-file=log_valgrind ./$(NAME)
+
+gbd:
+
 
 clean:
 	@ echo $(CURSIVE) $(GRAY) " - Removing Object files..." $(NONE)

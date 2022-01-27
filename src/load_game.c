@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 23:50:46 by coder             #+#    #+#             */
-/*   Updated: 2022/01/26 00:33:19 by coder            ###   ########.fr       */
+/*   Updated: 2022/01/27 20:32:41 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,18 @@ char	**load_map(char *path)
 	return (map);
 }
 
-void	size_window(t_module *module)
+void	size_window(t_module *module, t_map *map)
 {
-	int	inx;
-
-	inx = 0;
-	module->game.wdt = ft_strlen(module->game.map[0]) * 32;
-	while (module->game.map[inx])
-		inx++;
-	module->game.hgt = (inx) * 32;
-	printf("%d\n%d\n%d\n", module->game.wdt, module->game.hgt, inx);
+	map->x = 0;
+	map->y = 0;
+	while (map->map[map->y])
+	{
+		while (map->map[map->y][map->x])
+			map->x++;
+		map->y++;
+	}
+	module->game.hgt = map->y * 32;
+	module->game.wdt = map->x * 32;
 }
 
 void	load_sprites(t_module *module)
@@ -60,11 +62,11 @@ void	load_sprites(t_module *module)
 			"./images/wall_tile.xpm", &module->tile.wdt, &module->tile.hgt);
 }
 
-void	load_game(t_module *mdl, char *map_path)
+void	load_game(t_module *mdl, t_map *map, char *map_path)
 {
-	mdl->game.map = load_map(map_path);
+	map->map = load_map(map_path);
 	mdl->game.mlx = mlx_init();
-	size_window(mdl);
+	size_window(mdl, map);
 	mdl->game.win = mlx_new_window(mdl->game.mlx, mdl->game.wdt,
 			mdl->game.hgt, "So Long");
 	load_sprites(mdl);
