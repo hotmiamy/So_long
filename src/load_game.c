@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 23:50:46 by coder             #+#    #+#             */
-/*   Updated: 2022/01/27 20:32:41 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/01 07:51:19 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,19 @@ char	**load_map(char *path)
 
 void	size_window(t_module *module, t_map *map)
 {
-	map->x = 0;
 	map->y = 0;
 	while (map->map[map->y])
 	{
-		while (map->map[map->y][map->x])
+		map->x = 0;
+		while (map->map[0][map->x])
+		{
+			valid_chars(module, map, map->x, map->y);
 			map->x++;
+		}
 		map->y++;
 	}
-	module->game.hgt = map->y * 32;
 	module->game.wdt = map->x * 32;
+	module->game.hgt = map->y * 32;
 }
 
 void	load_sprites(t_module *module)
@@ -64,6 +67,10 @@ void	load_sprites(t_module *module)
 
 void	load_game(t_module *mdl, t_map *map, char *map_path)
 {
+	map->ch_p = 0;
+	map->ch_e = 0;
+	map->ch_0 = 0;
+	mdl->game.c_count = 0;
 	map->map = load_map(map_path);
 	mdl->game.mlx = mlx_init();
 	size_window(mdl, map);

@@ -1,11 +1,13 @@
 NAME = so_long.out
 
-FLAGS  = -Wall -Wextra -Werror
+CC = gcc
+CFLAGS  = -Wall -Wextra -Werror -g3
 INCLUDES = -lmlx -lX11 -lXext
 
+SRC_FILES = main.c map.c load_game.c validate.c close_game.c
 SRC = $(addprefix ./src/, $(SRC_FILES))
-SRC_FILES = main.c map.c load_game.c validate.c
-OBJ = $(SRC:src/.c=src/.o)
+OBJ = $(SRC:.c=.o)
+HEADER = so_long.h
 
 LIBFT = ./libft/libft.a
 
@@ -15,25 +17,29 @@ YELLOW='\033[33m'
 GRAY='\033[2;37m'
 CURSIVE='\033[3m'
 
-$(OBJ)/%.o: $(SRC)
-	@ echo $(CURSIVE) $(GRAY) " - Making object files..." $(NONE)
-	clang $(FLAGS) -c $< -o $(<:.c=.o)
-
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT) 
+$(OBJ): %.o : %.c
+	@ echo $(CURSIVE) $(GRAY) " - Making object files..." $(NONE)
+	$(CC) $(CFLAGS)  -o $@ -c $<
+
+$(NAME): $(OBJ) $(LIBFT) $(HEADER)
 	@ echo $(CURSIVE) $(GRAY) " - Compiling $(NAME)..." $(NONE)
-	clang $(FLAGS) $(OBJ) $(LIBFT) -g3 $(INCLUDES) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INCLUDES) -o $(NAME)
 	@ echo $(GREEN)" - Compiled - " $(NONE)
 
-$(LIBFT): 
-	make all -C ./libft
+$(LIBFT):
+	@ echo $(CURSIVE) $(GRAY) " - Compiling $(LIBFT)..." $(NONE)
+	@ make all -C ./libft
 
 valgrind:
 	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --log-file=log_valgrind ./$(NAME)
 
-gbd:
+debug:
+	gdb so_long.out
 
+out:
+	./so_long.out
 
 clean:
 	@ echo $(CURSIVE) $(GRAY) " - Removing Object files..." $(NONE)
