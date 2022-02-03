@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 23:50:46 by coder             #+#    #+#             */
-/*   Updated: 2022/02/01 07:51:19 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/03 06:01:23 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,41 +40,64 @@ char	**load_map(char *path)
 	return (map);
 }
 
-void	size_window(t_module *module, t_map *map)
+void	size_window(t_stc *stc)
 {
-	map->y = 0;
-	while (map->map[map->y])
+	stc->map.y = 0;
+	while (stc->map.map[stc->map.y])
 	{
-		map->x = 0;
-		while (map->map[0][map->x])
+		stc->map.x = 0;
+		while (stc->map.map[stc->map.y][stc->map.x])
 		{
-			valid_chars(module, map, map->x, map->y);
-			map->x++;
+			valid_chars(stc, stc->map.x, stc->map.y);
+			stc->map.x++;
 		}
-		map->y++;
+		stc->map.y++;
 	}
-	module->game.wdt = map->x * 32;
-	module->game.hgt = map->y * 32;
+	stc->game.wdt = stc->map.x * 32;
+	stc->game.hgt = stc->map.y * 32;
 }
 
-void	load_sprites(t_module *module)
+void	load_static_sprites(t_stc *stc)
 {
-	module->tile.floor = mlx_xpm_file_to_image(module->game.mlx,
-			"./images/floor_tile.xpm", &module->tile.wdt, &module->tile.hgt);
-	module->tile.wall = mlx_xpm_file_to_image(module->game.mlx,
-			"./images/wall_tile.xpm", &module->tile.wdt, &module->tile.hgt);
+	stc->tile.floor = mlx_xpm_file_to_image(stc->game.mlx,
+			TILE_FLOOR, &stc->tile.wdt, &stc->tile.hgt);
+	stc->tile.wall = mlx_xpm_file_to_image(stc->game.mlx,
+			WALL_TILE, &stc->tile.wdt, &stc->tile.hgt);
+	stc->tile.colec = mlx_xpm_file_to_image(stc->game.mlx,
+			COLEC, &stc->tile.wdt, &stc->tile.hgt);
+	stc->tile.exit = mlx_xpm_file_to_image(stc->game.mlx,
+			EXIT_CLOSE, &stc->tile.wdt, &stc->tile.hgt);
 }
 
-void	load_game(t_module *mdl, t_map *map, char *map_path)
+void	load_dinamic_sprites(t_stc *stc, int type, int inx)
 {
-	map->ch_p = 0;
-	map->ch_e = 0;
-	map->ch_0 = 0;
-	mdl->game.c_count = 0;
-	map->map = load_map(map_path);
-	mdl->game.mlx = mlx_init();
-	size_window(mdl, map);
-	mdl->game.win = mlx_new_window(mdl->game.mlx, mdl->game.wdt,
-			mdl->game.hgt, "So Long");
-	load_sprites(mdl);
+	stc->player.spr_fl[0] = PLAYER_F;
+	stc->player.spr_fl[1] = PLAYER_B;
+	stc->player.spr_fl[2] = PLAYER_L;
+	stc->player.spr_fl[3] = PLAYER_R;
+	stc->tile.exit_fl[0] = EXIT_CLOSE;
+	stc->tile.exit_fl[1] = EXIT_OPEN;
+	if (type == 0)
+		stc->player.sprite = mlx_xpm_file_to_image(stc->game.mlx,
+				stc->player.spr_fl[inx],
+				&stc->player.sprt_w, &stc->player.sprt_h);
+	if (type == 1)
+		stc->tile.exit = mlx_xpm_file_to_image(stc->game.mlx,
+				stc->tile.exit_fl[inx], &stc->tile.wdt, &stc->tile.hgt);
+}
+
+void	load_game(t_stc *stc, char *map_path)
+{
+	stc->map.ch_p = 0;
+	stc->map.ch_e = 0;
+	stc->map.ch_0 = 0;
+	stc->game.c_count = 0;
+	stc->map.map = load_map(map_path);
+	stc->game.mlx = mlx_init();
+	size_window(stc);
+	stc->game.win = mlx_new_window(stc->game.mlx, stc->game.wdt,
+			stc->game.hgt, "So Long");
+	load_static_sprites(stc);
+	load_dinamic_sprites(stc, 0, 0);
+	load_dinamic_sprites(stc, 1, 0);
 }
