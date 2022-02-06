@@ -6,13 +6,19 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 20:01:08 by coder             #+#    #+#             */
-/*   Updated: 2022/02/03 05:56:12 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/06 06:20:48 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 # define XK_MISCELLANY
+
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_A 97
+# define KEY_D 100
+# define ARROW_UP
 
 # define PLAYER_F "./images/player_front.xpm"
 # define PLAYER_B "./images/player_back.xpm"
@@ -36,6 +42,7 @@ typedef struct s_game
 {
 	void	*mlx;
 	void	*win;
+	int		end_game;
 	int		wdt;
 	int		hgt;
 	int		c_count;
@@ -62,10 +69,19 @@ typedef struct s_tile
 	int		hgt;
 }	t_tile;
 
+typedef struct s_cam
+{
+	char	**cam_m;
+	int		x;
+	int		y;
+}	t_cam;
+
 typedef struct s_player
 {
 	void	*sprite;
 	char	*spr_fl[4];
+	int		move;
+	int		posix;
 	int		sprt_w;
 	int		sprt_h;
 	int		x;
@@ -78,15 +94,23 @@ typedef struct s_stc
 	t_tile		tile;
 	t_player	player;
 	t_map		map;
+	t_cam		cam;
 }	t_stc;
 
-int		main(void);
-void	draw(t_stc *stc, int x, int y);
-void	draw_map(t_stc *stc);
 void	load_game(t_stc *mdl, char *map_path);
-int		is_valid(t_stc *module);
-void	exit_game(t_stc *module, char *error);
-int		valid_chars(t_stc *module, int x, int y);
-void	load_dinamic_sprites(t_stc *stc, int type, int inx);
-
+void	exit_game(t_stc *stc, char *error);
+void	exit_sprites(t_stc *stc, int inx);
+void	hooks(t_stc *stc);
+void	player_move(t_stc *stc, int key);
+void	player_update(t_stc *stc, int key);
+void	player_sprite(t_stc *stc, int inx);
+int		main(void);
+int		draw(t_stc *stc, int x, int y);
+int		draw_map(t_stc *stc);
+int		is_valid(t_stc *stc);
+int		valid_chars(t_stc *stc, int x, int y);
+int		is_free(t_stc *stc, int key);
+void	validate_map(t_stc *stc, char *str);
+int		cam(int atual, int min, int max);
+char	**load_cam(t_stc *stc, int x, int y);
 #endif

@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:28:11 by coder             #+#    #+#             */
-/*   Updated: 2022/02/03 06:12:44 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/06 06:22:00 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,41 @@ void	put_img(t_stc *stc, void *img, int x, int y)
 		img, x * 32, y * 32);
 }
 
-void	draw_map(t_stc *stc)
+int	draw(t_stc *stc, int x, int y)
+{
+	if (stc->cam.cam_m[y][x] == '0')
+		put_img(stc, stc->tile.floor, x, y);
+	else if (stc->cam.cam_m[y][x] == '1')
+		put_img(stc, stc->tile.wall, x, y);
+	else if (stc->cam.cam_m[y][x] == 'P')
+		put_img(stc, stc->player.sprite, x, y);
+	else if (stc->cam.cam_m[y][x] == 'E')
+		put_img(stc, stc->tile.exit, x, y);
+	else if (stc->cam.cam_m[y][x] == 'C')
+		put_img(stc, stc->tile.colec, x, y);
+	return (0);
+}
+
+int	draw_map(t_stc *stc)
 {
 	int	x;
 	int	y;
 
 	y = 0;
-	while (y < stc->map.y)
+	while (y < stc->map.y / 2)
 	{
 		x = 0;
-		while (x < stc->map.x)
+		while (x < stc->map.x / 2)
 		{
-			if (stc->map.map[y][x] == '0')
-				put_img(stc, stc->tile.floor, x, y);
-			else if (stc->map.map[y][x] == '1')
-				put_img(stc, stc->tile.wall, x, y);
-			else if (stc->map.map[y][x] == 'P')
-				put_img(stc, stc->player.sprite, x, y);
-			else if (stc->map.map[y][x] == 'E')
-				put_img(stc, stc->tile.exit, x, y);
-			else if (stc->map.map[y][x] == 'C')
-				put_img(stc, stc->tile.colec, x, y);
+			if (stc->game.c_count == 0)
+			{
+				mlx_destroy_image(stc->game.mlx, stc->tile.exit);
+				exit_sprites(stc, 1);
+			}
+			draw(stc, x, y);
 			x++;
 		}
 		y++;
 	}
+	return (0);
 }

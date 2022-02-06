@@ -4,7 +4,7 @@ CC = gcc
 CFLAGS  = -Wall -Wextra -Werror -g3
 INCLUDES = -lmlx -lX11 -lXext
 
-SRC_FILES = main.c map.c load_game.c validate.c close_game.c
+SRC_FILES = main.c map.c load_game.c validate.c close_game.c player.c gameplay.c camera.c
 SRC = $(addprefix ./src/, $(SRC_FILES))
 OBJ = $(SRC:.c=.o)
 HEADER = so_long.h

@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 20:31:54 by coder             #+#    #+#             */
-/*   Updated: 2022/02/01 21:02:46 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/06 01:53:41 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 int	valid_chars(t_stc *stc, int x, int y)
 {
 	if (stc->map.map[y][x] == 'P')
+	{
+		stc->player.x = x;
+		stc->player.y = y;
 		stc->map.ch_p = 1;
+	}
 	else if (stc->map.map[y][x] == 'E')
 		stc->map.ch_e = 1;
 	else if (stc->map.map[y][x] == 'C')
@@ -54,4 +58,12 @@ int	is_valid(t_stc *stc)
 		y++;
 	}
 	return (1);
+}
+
+void	validate_map(t_stc *stc, char *str)
+{
+	if (ft_strnstr(str, "\n\n1", ft_strlen(str)))
+	{
+		exit_game(stc, "map is invalid");
+	}
 }
