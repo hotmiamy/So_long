@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 03:27:40 by coder             #+#    #+#             */
-/*   Updated: 2022/02/05 20:48:00 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/07 19:23:44 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	exit_game(t_stc *stc, char *error)
 {
 	if (*error != 0)
 		printf("Error\n%s\n", error);
+	free_map(stc->cam.cam_m);
 	free_map(stc->map.map);
 	mlx_destroy_image(stc->game.mlx, stc->tile.floor);
 	mlx_destroy_image(stc->game.mlx, stc->tile.wall);

@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 15:46:15 by coder             #+#    #+#             */
-/*   Updated: 2022/02/06 06:31:42 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/07 19:51:29 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,7 @@ void	player_update(t_stc *stc, int key)
 	else if (stc->game.c_count == 0 && stc->player.posix == 'E')
 		exit_game(stc, "");
 	player_move(stc, key);
-	stc->cam.cam_m = load_cam(stc, stc->player.x - 1, stc->player.y - 1);
+	if (!stc->cam.cam_m)
+		free_map(stc->cam.cam_m);
+	read_map(stc, stc->player.x - 1, stc->player.y - 1);
 }

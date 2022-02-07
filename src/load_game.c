@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 23:50:46 by coder             #+#    #+#             */
-/*   Updated: 2022/02/06 06:30:37 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/07 20:08:42 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	size_window(t_stc *stc)
 		}
 		stc->map.y++;
 	}
-	stc->cam.cam_m = load_cam(stc, stc->player.x - 1, stc->player.y - 1);
 	stc->game.wdt = (stc->map.x / 2) * 32;
 	stc->game.hgt = (stc->map.y / 2) * 32;
 }
@@ -93,6 +92,8 @@ void	load_game(t_stc *stc, char *map_path)
 	stc->map.map = load_map(stc, map_path);
 	stc->game.mlx = mlx_init();
 	size_window(stc);
+	load_cam(stc);
+	read_map(stc, stc->player.x - 1, stc->player.y - 1);
 	stc->game.win = mlx_new_window(stc->game.mlx, stc->game.wdt,
 			stc->game.hgt, "So Long");
 	load_static_sprites(stc);

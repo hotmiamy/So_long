@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 20:01:08 by coder             #+#    #+#             */
-/*   Updated: 2022/02/06 06:20:48 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/06 23:17:44 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,15 @@ void	hooks(t_stc *stc);
 void	player_move(t_stc *stc, int key);
 void	player_update(t_stc *stc, int key);
 void	player_sprite(t_stc *stc, int inx);
+void	free_map(char **map);
+void	validate_map(t_stc *stc, char *str);
+void	load_cam(t_stc *stc);
+void	read_map(t_stc *stc, int x, int y);
 int		main(void);
 int		draw(t_stc *stc, int x, int y);
 int		draw_map(t_stc *stc);
 int		is_valid(t_stc *stc);
 int		valid_chars(t_stc *stc, int x, int y);
 int		is_free(t_stc *stc, int key);
-void	validate_map(t_stc *stc, char *str);
 int		cam(int atual, int min, int max);
-char	**load_cam(t_stc *stc, int x, int y);
 #endif
