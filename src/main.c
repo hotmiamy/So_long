@@ -6,61 +6,30 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 22:03:39 by llopes-n          #+#    #+#             */
-/*   Updated: 2022/02/06 06:16:33 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/09 17:21:08 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-int	key_hook(int key, t_stc *stc)
-{
-	printf("%d\n", key);
-	if (key == XK_Escape)
-		exit_game(stc, "");
-	else if (key == KEY_W)
-	{
-		stc->player.y--;
-		player_update(stc, key);
-	}
-	else if (key == KEY_S)
-	{
-		stc->player.y++;
-		player_update(stc, key);
-	}
-	else if (key == KEY_D)
-	{
-		stc->player.x++;
-		player_update(stc, key);
-	}
-	else if (key == KEY_A)
-	{
-		stc->player.x--;
-		player_update(stc, key);
-	}
-	return (0);
-}
-
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_stc	stc;
 
-	load_game(&stc, "./maps/map.ber");
-	if (is_valid(&stc) == 1)
+	if (argc == 2 && ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])) != 0)
 	{
-		mlx_key_hook(stc.game.win, key_hook, &stc);
-		hooks(&stc);
-		mlx_loop(stc.game.mlx);
+		load_game(&stc, argv[1]);
+		if (is_valid(&stc) == 1)
+		{
+			map_quest(&stc, argv[1]);
+			mlx_key_hook(stc.game.win, key_hook, &stc);
+			mlx_hook(stc.game.win, 17, 1L << 17, exit_game, &stc);
+			hooks(&stc);
+		}
+		else
+			exit_error(&stc, "map is invalid");
+		return (0);
 	}
 	else
-		exit_game(&stc, "map is invalid");
-	return (0);
-}
-
-int	cam(int atual, int min, int max)
-{
-	if (atual < min)
-		atual = min;
-	if (atual > max)
-		atual = max;
-	return (atual);
+		exit_error(&stc, "wrong syntax or wrong map extention");
 }

@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 03:27:40 by coder             #+#    #+#             */
-/*   Updated: 2022/02/07 19:23:44 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/09 17:22:53 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@ void	free_map(char **map)
 	free(map);
 }
 
-void	exit_game(t_stc *stc, char *error)
+int	exit_error(t_stc *stc, char *error)
 {
-	if (*error != 0)
-		printf("Error\n%s\n", error);
+	printf("Error\n%s\n", error);
 	free_map(stc->cam.cam_m);
 	free_map(stc->map.map);
 	mlx_destroy_image(stc->game.mlx, stc->tile.floor);
@@ -39,5 +38,22 @@ void	exit_game(t_stc *stc, char *error)
 	mlx_destroy_window(stc->game.mlx, stc->game.win);
 	mlx_destroy_display(stc->game.mlx);
 	free(stc->game.mlx);
-	exit (1);
+	exit (0);
+	return (0);
+}
+
+int	exit_game(t_stc *stc)
+{
+	free_map(stc->cam.cam_m);
+	free_map(stc->map.map);
+	mlx_destroy_image(stc->game.mlx, stc->tile.floor);
+	mlx_destroy_image(stc->game.mlx, stc->tile.wall);
+	mlx_destroy_image(stc->game.mlx, stc->tile.exit);
+	mlx_destroy_image(stc->game.mlx, stc->tile.colec);
+	mlx_destroy_image(stc->game.mlx, stc->player.sprite);
+	mlx_destroy_window(stc->game.mlx, stc->game.win);
+	mlx_destroy_display(stc->game.mlx);
+	free(stc->game.mlx);
+	exit (0);
+	return (0);
 }

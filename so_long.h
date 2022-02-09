@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 20:01:08 by coder             #+#    #+#             */
-/*   Updated: 2022/02/06 23:17:44 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/09 17:30:14 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
 # define KEY_S 115
 # define KEY_A 97
 # define KEY_D 100
-# define ARROW_UP
+# define UP 65362
+# define DOWN 65364
+# define LEFT 65361
+# define RIGHT 65363
 
 # define PLAYER_F "./images/player_front.xpm"
 # define PLAYER_B "./images/player_back.xpm"
@@ -51,6 +54,7 @@ typedef struct s_game
 typedef struct s_map
 {
 	char	**map;
+	int		map_type;
 	int		ch_p;
 	int		ch_e;
 	int		ch_0;
@@ -84,6 +88,7 @@ typedef struct s_player
 	int		posix;
 	int		sprt_w;
 	int		sprt_h;
+	int		moves;
 	int		x;
 	int		y;
 }	t_player;
@@ -98,7 +103,6 @@ typedef struct s_stc
 }	t_stc;
 
 void	load_game(t_stc *mdl, char *map_path);
-void	exit_game(t_stc *stc, char *error);
 void	exit_sprites(t_stc *stc, int inx);
 void	hooks(t_stc *stc);
 void	player_move(t_stc *stc, int key);
@@ -108,11 +112,15 @@ void	free_map(char **map);
 void	validate_map(t_stc *stc, char *str);
 void	load_cam(t_stc *stc);
 void	read_map(t_stc *stc, int x, int y);
-int		main(void);
+void	map_quest(t_stc *stc, char *map_name);
+int		exit_error(t_stc *stc, char *error);
+int		main(int argc, char **argv);
 int		draw(t_stc *stc, int x, int y);
 int		draw_map(t_stc *stc);
 int		is_valid(t_stc *stc);
 int		valid_chars(t_stc *stc, int x, int y);
 int		is_free(t_stc *stc, int key);
 int		cam(int atual, int min, int max);
+int		key_hook(int key, t_stc *stc);
+int		exit_game(t_stc *stc);
 #endif

@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:28:11 by coder             #+#    #+#             */
-/*   Updated: 2022/02/06 06:22:00 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/07 21:48:41 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	draw_map(t_stc *stc)
 	int	y;
 
 	y = 0;
-	while (y < stc->map.y / 2)
+	while (y < stc->cam.y)
 	{
 		x = 0;
-		while (x < stc->map.x / 2)
+		while (x < stc->cam.x)
 		{
 			if (stc->game.c_count == 0)
 			{

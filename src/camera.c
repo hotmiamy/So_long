@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 04:29:03 by coder             #+#    #+#             */
-/*   Updated: 2022/02/07 20:08:49 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/07 21:49:18 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,14 @@
 
 void	load_cam(t_stc *stc)
 {
-	stc->cam.x = stc->map.x / 2;
-	stc->cam.y = stc->map.y / 2;
+	if (stc->map.x >= 24)
+		stc->cam.x = stc->map.x / 2;
+	else
+		stc->cam.x = stc->map.x;
+	if (stc->map.y >= 24)
+		stc->cam.y = stc->map.y / 2;
+	else
+		stc->cam.y = stc->map.y;
 	stc->cam.cam_m = ft_calloc(stc->cam.y + 1, sizeof(char *));
 }
 
@@ -32,6 +38,7 @@ void	read_map(t_stc *stc, int x, int y)
 	index_map = y;
 	while (array < stc->cam.y)
 	{
+		free(stc->cam.cam_m[array]);
 		stc->cam.cam_m[array] = ft_substr(stc->map.map[index_map],
 				x, stc->cam.x);
 		index_map++;

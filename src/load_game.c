@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 23:50:46 by coder             #+#    #+#             */
-/*   Updated: 2022/02/07 20:08:42 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/09 17:21:28 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ char	**load_map(t_stc *stc, char *path)
 	char	*map_line;
 
 	map_fd = open(path, O_RDONLY);
-	if (map_fd == -1)
-		return (NULL);
+	if (map_fd < 0)
+		exit_error(stc, "Unable to open the map");
 	map_line = ft_strdup("");
 	while (1)
 	{
@@ -54,8 +54,11 @@ void	size_window(t_stc *stc)
 		}
 		stc->map.y++;
 	}
-	stc->game.wdt = (stc->map.x / 2) * 32;
-	stc->game.hgt = (stc->map.y / 2) * 32;
+	load_cam(stc);
+	stc->game.wdt = stc->cam.x * 32;
+	stc->game.hgt = stc->cam.y * 32;
+	if (stc->game.wdt == 0 || stc->game.hgt == 0)
+		exit_error(stc, "The map is empty");
 }
 
 void	load_static_sprites(t_stc *stc)
@@ -80,9 +83,10 @@ void	load_game(t_stc *stc, char *map_path)
 	stc->map.ch_e = 0;
 	stc->map.ch_0 = 0;
 	stc->game.c_count = 0;
-	stc->game.end_game = 0;
 	stc->cam.x = 0;
 	stc->cam.y = 0;
+	stc->player.moves = 0;
+	stc->map.map_type = 0;
 	stc->player.spr_fl[0] = PLAYER_F;
 	stc->player.spr_fl[1] = PLAYER_B;
 	stc->player.spr_fl[2] = PLAYER_L;
@@ -92,8 +96,7 @@ void	load_game(t_stc *stc, char *map_path)
 	stc->map.map = load_map(stc, map_path);
 	stc->game.mlx = mlx_init();
 	size_window(stc);
-	load_cam(stc);
-	read_map(stc, stc->player.x - 1, stc->player.y - 1);
+	read_map(stc, 0, 0);
 	stc->game.win = mlx_new_window(stc->game.mlx, stc->game.wdt,
 			stc->game.hgt, "So Long");
 	load_static_sprites(stc);
