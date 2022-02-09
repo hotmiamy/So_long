@@ -1,4 +1,4 @@
-NAME = so_long.out
+NAME = so_long
 
 CC = gcc
 CFLAGS  = -Wall -Wextra -Werror -g3
@@ -47,6 +47,7 @@ clean:
 
 fclean: clean
 	@ echo $(CURSIVE) $(GRAY) " - removing $(NAME)..." $(NONE)
+	@ make fclean -C ./libft
 	@ rm -rf $(NAME)
 
 re: fclean all
