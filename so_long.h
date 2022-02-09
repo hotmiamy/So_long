@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 20:01:08 by coder             #+#    #+#             */
-/*   Updated: 2022/02/09 17:30:14 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/09 21:24:50 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_game
 	int		wdt;
 	int		hgt;
 	int		c_count;
+	int		map_load;
 }	t_game;
 
 typedef struct s_map
@@ -113,12 +114,12 @@ void	validate_map(t_stc *stc, char *str);
 void	load_cam(t_stc *stc);
 void	read_map(t_stc *stc, int x, int y);
 void	map_quest(t_stc *stc, char *map_name);
+void	valid_chars(t_stc *stc);
 int		exit_error(t_stc *stc, char *error);
 int		main(int argc, char **argv);
 int		draw(t_stc *stc, int x, int y);
 int		draw_map(t_stc *stc);
 int		is_valid(t_stc *stc);
-int		valid_chars(t_stc *stc, int x, int y);
 int		is_free(t_stc *stc, int key);
 int		cam(int atual, int min, int max);
 int		key_hook(int key, t_stc *stc);

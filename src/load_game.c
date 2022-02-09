@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 23:50:46 by coder             #+#    #+#             */
-/*   Updated: 2022/02/09 17:21:28 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/10 00:40:01 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ char	**load_map(t_stc *stc, char *path)
 		free(map_gnl_buff);
 		free(map_line_buff);
 	}
+	close(map_fd);
 	validate_map(stc, map_line);
 	map = ft_split(map_line, '\n');
 	free(map_line);
-	close(map_fd);
 	return (map);
 }
 
@@ -48,17 +48,12 @@ void	size_window(t_stc *stc)
 	{
 		stc->map.x = 0;
 		while (stc->map.map[stc->map.y][stc->map.x])
-		{
-			valid_chars(stc, stc->map.x, stc->map.y);
 			stc->map.x++;
-		}
 		stc->map.y++;
 	}
 	load_cam(stc);
 	stc->game.wdt = stc->cam.x * 32;
 	stc->game.hgt = stc->cam.y * 32;
-	if (stc->game.wdt == 0 || stc->game.hgt == 0)
-		exit_error(stc, "The map is empty");
 }
 
 void	load_static_sprites(t_stc *stc)
@@ -85,6 +80,7 @@ void	load_game(t_stc *stc, char *map_path)
 	stc->game.c_count = 0;
 	stc->cam.x = 0;
 	stc->cam.y = 0;
+	stc->game.map_load = 0;
 	stc->player.moves = 0;
 	stc->map.map_type = 0;
 	stc->player.spr_fl[0] = PLAYER_F;
@@ -94,12 +90,13 @@ void	load_game(t_stc *stc, char *map_path)
 	stc->tile.exit_fl[0] = EXIT_CLOSE;
 	stc->tile.exit_fl[1] = EXIT_OPEN;
 	stc->map.map = load_map(stc, map_path);
-	stc->game.mlx = mlx_init();
+	stc->game.map_load = 1;
 	size_window(stc);
-	read_map(stc, 0, 0);
-	stc->game.win = mlx_new_window(stc->game.mlx, stc->game.wdt,
-			stc->game.hgt, "So Long");
+	stc->game.mlx = mlx_init();
 	load_static_sprites(stc);
 	exit_sprites(stc, 0);
 	player_sprite(stc, 0);
+	read_map(stc, 0, 0);
+	stc->game.win = mlx_new_window(stc->game.mlx, stc->game.wdt,
+			stc->game.hgt, "So Long");
 }

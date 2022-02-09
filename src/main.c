@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 22:03:39 by llopes-n          #+#    #+#             */
-/*   Updated: 2022/02/09 17:21:08 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/09 22:11:13 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	else
-		exit_error(&stc, "wrong syntax or wrong map extention");
+	{
+		printf("Error\nwrong syntax or wrong map extention\n");
+		exit(0);
+	}
 }
