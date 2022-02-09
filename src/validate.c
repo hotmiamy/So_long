@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 20:31:54 by coder             #+#    #+#             */
-/*   Updated: 2022/02/09 17:21:54 by coder            ###   ########.fr       */
+/*   Updated: 2022/02/09 20:05:47 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	is_valid(t_stc *stc)
 
 	x = 0;
 	y = 1;
-	if (stc->map.x == stc->map.y)
-		exit_error(stc, "The map is not a rectangle");
 	if (stc->map.ch_p != 1 || stc->map.ch_e != 1 || stc->game.c_count == 0)
 		exit_error(stc, "Is missing some char on the map");
 	while (stc->map.x > x)

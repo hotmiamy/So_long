@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_base_converter.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopes-n <llopes-n@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:05:17 by llopes-n          #+#    #+#             */
-/*   Updated: 2021/11/04 14:20:42 by llopes-n         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:43:04 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_base_converter(unsigned long nbr, char *base)
 
 	aux = nbr;
 	base_len = ft_strlen(base);
-	if(nbr == 0)
+	if (nbr == 0)
 		len = 1;
 	while (aux)
 	{
@@ -29,9 +29,9 @@ char	*ft_base_converter(unsigned long nbr, char *base)
 		len++;
 	}
 	str = ft_calloc(len + 1, sizeof(char));
-	if(!str)
+	if (!str)
 		return (0);
-	while(nbr)
+	while (nbr)
 	{
 		str[--len] = base[nbr % base_len];
 		nbr /= base_len;
