@@ -43,6 +43,7 @@ out:
 
 clean:
 	@ echo $(CURSIVE) $(GRAY) " - Removing Object files..." $(NONE)
+	@ make clean -C ./libft
 	@ rm -rf $(OBJ)
 
 fclean: clean
