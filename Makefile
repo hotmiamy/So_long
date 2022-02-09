@@ -21,11 +21,11 @@ all: $(NAME)
 
 $(OBJ): %.o : %.c
 	@ echo $(CURSIVE) $(GRAY) " - Making object files..." $(NONE)
-	$(CC) $(CFLAGS)  -o $@ -c $<
+	@ $(CC) $(CFLAGS)  -o $@ -c $<
 
 $(NAME): $(OBJ) $(LIBFT) $(HEADER)
 	@ echo $(CURSIVE) $(GRAY) " - Compiling $(NAME)..." $(NONE)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INCLUDES) -o $(NAME)
+	@ $(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INCLUDES) -o $(NAME)
 	@ echo $(GREEN)" - Compiled - " $(NONE)
 
 $(LIBFT):
@@ -36,10 +36,10 @@ valgrind:
 	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --log-file=log_valgrind ./$(NAME) ./maps/small_map.ber
 
 debug:
-	gdb so_long.out
+	gdb so_long
 
 out:
-	./so_long.out
+	./so_long
 
 clean:
 	@ echo $(CURSIVE) $(GRAY) " - Removing Object files..." $(NONE)

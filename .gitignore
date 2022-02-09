@@ -1,4 +1,5 @@
 *.o
 *.out
+so_long
 log_valgrind*
 .nfs*
