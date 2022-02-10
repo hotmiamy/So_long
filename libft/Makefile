@@ -17,22 +17,33 @@ AR = ar
 RM = rm -f
 ARFLAGS = rcs
 
+NONE='\033[0m'
+GREEN='\033[32m'
+YELLOW='\033[33m'
+GRAY='\033[2;37m'
+CURSIVE='\033[3m'
+
 .c.o:
-	$(CC) $(CFLAGS) -c $^
+	@ echo $(CURSIVE) $(GRAY) " - Making object files of $(NAME)..." $(NONE)
+	@ $(CC) $(CFLAGS) -c $^
 
 
 $(NAME): $(OBJFILES)
-	$(AR) $(ARFLAGS) $(NAME) $(OBJFILES)
+	@ echo $(CURSIVE) $(GRAY) " - Compiling $(NAME)..." $(NONE)
+	@ $(AR) $(ARFLAGS) $(NAME) $(OBJFILES)
+	@ echo $(GREEN)" - Compiled - " $(NONE)
 
 all: $(NAME)
 
 re: fclean all
 
 clean:
-	$(RM) $(OBJFILES)
+	@ echo $(CURSIVE) $(GRAY) " - Removing Object files of $(NAME)..." $(NONE)
+	@ $(RM) $(OBJFILES)
 
 fclean: clean
-	$(RM) $(NAME)
+	@ echo $(CURSIVE) $(GRAY) " - removing $(NAME)..." $(NONE)
+	@ $(RM) $(NAME)
 
 so:
 	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRCFILES)
