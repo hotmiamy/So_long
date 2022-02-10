@@ -33,7 +33,7 @@ $(LIBFT):
 	@ make all -C ./libft
 
 valgrind:
-	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --log-file=log_valgrind ./$(NAME) ./maps/small_map.ber
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --log-file=log_valgrind ./$(NAME) ./maps/wrong_lenght_map.ber
 
 debug:
 	gdb so_long
