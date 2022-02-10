@@ -3,4 +3,4 @@
 so_long
 log_valgrind*
 .nfs*
-*.a
+./libft/*.a
